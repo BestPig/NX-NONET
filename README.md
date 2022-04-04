@@ -1,56 +1,14 @@
-# NX-FPS
+# NX-NONET
 
-SaltyNX plugin that collects FPS data in Nintendo Switch games. You need my fork of SaltyNX installed.
+SaltyNX plugin that fake no available internet connection to avoid NAG on some games without without enabling AirPlane mode.
+
+You need masagrator SaltyNX fork installed.
 https://github.com/masagrator/SaltyNX/releases
 
-Put NX-FPS.elf to `/SaltySD/plugins`
+Put NX-NONET.elf to `/SaltySD/plugins`
 
-Currently supported graphics APIs:
-- NVN
-- EGL
-- Vulkan
-
-When game is booted, plugin outputs one file:
-```
-/SaltySD/FPSoffset.hex
-```
-
-There is stored address, where you can find PFPS, FPS has address `PFPS - 0x8`.
-
->PFPS - Pushed Frames Per Second (u8), it counts how many frames were actually pushed to display in second that passed.
->
->FPS - Frames Per Second (float) caculated from averaged frametime, refreshed with each new frame.
-
-If file is already there, it's rewritten by new address with each new game boot.
-
-To show it on display, you can use Status Monitor Overlay >=0.4
-https://github.com/masagrator/Status-Monitor-Overlay
-
-You can also make your own homebrew to use this plugin.
-
->WARNING
-
-Plugin brings some instability to boot process for some games. It is recommended to not close game before ~10 seconds have passed from showing Nintendo logo, otherwise you risk Kernel panic, which results in crashing OS.
-
----
-
-Not working games with this plugin (You can find games not compatible with SaltyNX [here](https://github.com/masagrator/SaltyNX/blob/master/README.md))
-| Title | Version(s) | Why? |
-| ------------- | ------------- | ------------- |
-| Final Fantasy VIII Remastered | all | Framework stuff is included in NROs which SaltyNX doesn't support |
-| Final Fantasy X/X-2 | all | Framework stuff is included in NROs which SaltyNX doesn't support |
-
-# Troubleshooting
-Q: Why I got constantly 255?
-
-A: 255 is default value before plugin starts counting frames. This may be a sign that:
-* Game is using different API or function than what is currently supported
-* Plugin missed symbol when initializing (for whatever reason)
-
-Try first to run game again few times. If it's still 255, make an issue and state name of game. Next updates will include support for other graphics APIs.
+This plugin just hook `nn::nifm::IsNetworkAvailable()` and always return `0` to tell games no network is available.
 
 # Thanks to:
 
-- RetroNX channel for help with coding stuff,
-- CTCaer for providing many useful informations and convincing me to the end that I should target high precision,
-- Herbaciarz for providing video footage.
+- masagrator for the forked SaltyNX and NX-FPS where this plugin is based on

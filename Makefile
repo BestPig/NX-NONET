@@ -29,7 +29,7 @@ include $(DEVKITPRO)/libnx/switch_rules
 #     - icon.jpg
 #     - <libnx folder>/default_icon.jpg
 #---------------------------------------------------------------------------------
-TARGET		:=	NX-FPS
+TARGET		:=	NX-NONET
 BUILD		:=	build
 SOURCES		:=	source
 INCLUDES	:=	include
